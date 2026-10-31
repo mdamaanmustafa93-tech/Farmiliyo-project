@@ -1,0 +1,1333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FARMILIYO · Fresh from farmers to your home</title>
+<meta name="description" content="Buy rice, vegetables, fruits and pulses directly from farmers at fair prices. Subscribe for regular deliveries. Farmers can list produce for free.">
+<style>
+:root{--green:#2e7d32;--green-d:#1b5e20;--leaf:#f3f8ee;--sage:#e1eed3;--earth:#5d4037;--amber:#f9a825;--text:#22301f;--muted:#66745f;--line:#e4eadb;--red:#c62828;--radius:16px;--shadow:0 6px 24px rgba(40,70,30,.08)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:#fff;color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+#app{flex:1}
+img{max-width:100%;display:block}
+a{color:var(--green-d)}
+[hidden]{display:none!important}
+.container{width:min(1140px,100% - 32px);margin-inline:auto}
+.page{padding-bottom:40px}
+h1,h2,h3{line-height:1.2;margin:0 0 .5em}
+h1{font-size:clamp(1.7rem,4vw,2.3rem)}
+.h2s{font-size:1.25rem}
+.muted{color:var(--muted)}
+.small{font-size:.85rem}
+.center{text-align:center}
+.lead{font-size:1.1rem;color:var(--muted)}
+.page-head{padding:28px 0 10px}
+.page-head p{margin:0;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:999px;border:1.5px solid transparent;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;transition:.15s;background:#fff;color:var(--text)}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{background:var(--green-d)}
+.btn-outline{border-color:var(--green);color:var(--green-d)}
+.btn-outline:hover{background:var(--leaf)}
+.btn-ghost{border-color:var(--line)}
+.btn-danger{border-color:var(--red);color:var(--red)}
+.btn-danger:hover{background:#fdecea}
+.btn-lg{padding:14px 26px;font-size:1.05rem}
+.btn-sm{padding:6px 12px;font-size:.85rem}
+.btn-block{width:100%}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.link{background:none;border:0;color:var(--muted);cursor:pointer;font:inherit;padding:4px;text-decoration:underline}
+.link:hover{color:var(--red)}
+.acts{display:flex;gap:6px;flex-wrap:wrap}
+/* header */
+.site-header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.97);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:16px;min-height:72px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--green-d)}
+.wordmark{font-weight:900;letter-spacing:.07em;font-size:1.2rem}
+.hdr-search{flex:1 1 240px;min-width:200px;max-width:400px;display:flex;background:var(--leaf);border:1.5px solid var(--line);border-radius:999px;overflow:hidden}
+.hdr-search input{flex:1;border:0;background:transparent;padding:10px 16px;font:inherit;outline:none;min-width:0}
+.search-btn{border:0;background:var(--green);color:#fff;padding:0 16px;cursor:pointer}
+.main-nav{display:flex;gap:2px}
+.main-nav a{text-decoration:none;color:var(--text);padding:8px 10px;border-radius:999px;font-weight:500;font-size:.95rem;white-space:nowrap}
+.main-nav a:hover{background:var(--leaf)}
+.main-nav a.active{background:var(--sage);color:var(--green-d);font-weight:700}
+.nav-actions{display:flex;align-items:center;gap:10px;margin-left:auto}
+.cart-btn{text-decoration:none;color:var(--text);font-weight:600;padding:7px 12px;border-radius:999px;border:1.5px solid var(--line);white-space:nowrap}
+.cart-btn.active{border-color:var(--green)}
+.badge-count{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:99px;background:var(--amber);color:#3b2f00;font-size:.8rem;font-weight:800;padding:0 6px}
+.who{font-size:.9rem;color:var(--muted);white-space:nowrap}
+.menu-btn{display:none;background:none;border:0;font-size:1.5rem;cursor:pointer;margin-left:auto}
+/* footer */
+.site-footer{background:var(--leaf);border-top:1px solid var(--line);margin-top:40px;padding-top:36px}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:24px}
+.site-footer h4{margin:0 0 8px}
+.site-footer a{display:block;color:var(--text);text-decoration:none;padding:3px 0;font-size:.95rem}
+.site-footer .brand{padding:0}
+.copy{text-align:center;border-top:1px solid var(--line);margin:28px 0 0;padding:14px;color:var(--muted);font-size:.85rem}
+/* home */
+.hero{position:relative;overflow:hidden;padding:64px 0 56px}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.hero::before{width:460px;height:460px;right:-140px;top:-160px;background:radial-gradient(circle,#e8f3dc 0%,transparent 70%)}
+.hero::after{width:320px;height:320px;left:-120px;bottom:-140px;background:radial-gradient(circle,#f6f0e4 0%,transparent 70%)}
+.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.eyebrow{display:inline-block;background:var(--sage);color:var(--green-d);padding:4px 12px;border-radius:999px;font-weight:700;font-size:.85rem;margin-bottom:14px}
+.hero h1{font-size:clamp(2rem,5vw,3.3rem)}
+.hero h1 em{font-style:normal;color:var(--green)}
+.hero .lead{max-width:520px}
+.big-search{display:flex;margin:22px 0 16px;max-width:560px;background:#fff;border:2px solid var(--green);border-radius:999px;padding:4px;box-shadow:var(--shadow)}
+.big-search input{flex:1;border:0;outline:none;font:inherit;padding:10px 16px;min-width:0;background:transparent}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap}
+.hero-art{background:var(--leaf);border-radius:28px;padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hero-art .tile{background:#fff;border-radius:18px;padding:18px 12px;text-align:center;box-shadow:var(--shadow)}
+.hero-art .tile span{font-size:2.2rem}
+.hero-art .tile b{display:block;font-size:.98rem;margin-top:4px}
+.hero-art .tile small{color:var(--muted)}
+.cat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:34px 0 8px}
+.cat-tile{display:flex;flex-direction:column;align-items:center;gap:2px;padding:18px 10px;border:1.5px solid var(--line);border-radius:var(--radius);text-decoration:none;color:var(--text);background:#fff;font-weight:600;text-align:center}
+.cat-tile span{font-size:1.9rem}
+.cat-tile:hover{border-color:var(--green);background:var(--leaf)}
+.section{padding:36px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.band{background:var(--leaf);border-radius:var(--radius);padding:30px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
+.trio{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.box{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.box h3{margin:6px 0 4px}
+.box .ico{font-size:1.8rem}
+.box p{margin:0;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;counter-reset:s}
+.step{position:relative;padding:22px 22px 22px 72px;background:#fff;border:1px solid var(--line);border-radius:var(--radius)}
+.step::before{counter-increment:s;content:counter(s);position:absolute;left:20px;top:20px;width:36px;height:36px;border-radius:50%;background:var(--amber);color:#3b2f00;display:grid;place-items:center;font-weight:800}
+.step h3{margin:0 0 4px}
+.step p{margin:0;color:var(--muted)}
+/* panels and forms */
+.panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.panel h2{margin-top:0}
+.locked{text-align:center;padding:40px 20px}
+.auth-wrap{max-width:460px;margin:36px auto}
+.two{display:grid;grid-template-columns:380px 1fr;gap:24px;align-items:start}
+.grid-products{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+label{display:block;font-weight:600;font-size:.9rem;margin-bottom:12px}
+label input,label select,label textarea{display:block;width:100%;margin-top:5px;font-weight:400}
+input[type=checkbox],input[type=radio]{width:auto;display:inline-block;margin-right:6px}
+input,select,textarea{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;font:inherit;background:#fff;color:var(--text)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--green);outline-offset:1px;border-color:var(--green)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tabs{display:flex;border-bottom:2px solid var(--line);margin:14px 0 18px}
+.tab{flex:1;background:none;border:0;padding:10px;font:inherit;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px}
+.tab.active{color:var(--green-d);border-bottom-color:var(--green)}
+.msg{padding:10px 14px;border-radius:12px;font-size:.92rem;margin:0 0 12px}
+.msg.err{background:#fdecea;color:var(--red)}
+.msg.info{background:var(--leaf);color:var(--green-d)}
+.demo-box{background:#fff8e1;border:1.5px dashed var(--amber);border-radius:12px;padding:12px 14px;margin:10px 0 14px;font-size:.92rem}
+.demo-box strong{font-size:1.5rem;letter-spacing:.25em;display:block}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;cursor:pointer;font:inherit;font-weight:600;color:var(--text)}
+.chip.on{background:var(--green);border-color:var(--green);color:#fff}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:14px}
+.toolbar select{width:auto}
+.toolbar input{max-width:380px}
+/* product cards */
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+.card-img{position:relative;height:180px;background:var(--leaf);display:grid;place-items:center;overflow:hidden}
+.card-img .emoji{font-size:3.4rem}
+.card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ribbon{position:absolute;top:10px;left:10px;background:var(--red);color:#fff;font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:99px}
+.card-body{padding:14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card-body h3{margin:4px 0 0;font-size:1.1rem}
+.card-body p{margin:0}
+.desc{color:var(--muted);font-size:.9rem;flex:1}
+.tag{align-self:flex-start;background:var(--sage);color:var(--green-d);font-size:.75rem;font-weight:700;padding:2px 9px;border-radius:99px}
+.price-row{display:flex;align-items:baseline;gap:4px;margin-top:4px}
+.price-row strong{font-size:1.3rem;color:var(--green-d)}
+.stock{font-size:.85rem;color:var(--green)!important;margin-bottom:6px!important}
+.stock.out{color:var(--red)!important}
+.card-actions{display:flex;gap:8px;margin-top:8px;align-items:center}
+.card-actions .btn-primary{flex:1}
+/* cart */
+.line{display:grid;grid-template-columns:64px 1fr auto auto auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.thumb{position:relative;width:64px;height:64px;border-radius:12px;background:var(--leaf);display:grid;place-items:center;font-size:1.8rem;overflow:hidden}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);background:#fff;cursor:pointer;font-size:1rem}
+.qty button:hover{border-color:var(--green);color:var(--green-d)}
+.sum-row{display:flex;justify-content:space-between;margin:8px 0}
+.sum-total{font-size:1.2rem;border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
+.pay-opt{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px;cursor:pointer;font-weight:600}
+.pay-opt:has(input:checked){border-color:var(--green);background:var(--leaf)}
+.pay-opt small{display:block;font-weight:400;color:var(--muted)}
+.pay-opt input{width:auto;display:inline-block;margin:4px 0 0}
+/* subscriptions, orders, farmer */
+.item{border:1px solid var(--line);border-radius:var(--radius);padding:16px;background:#fff;margin-bottom:12px}
+.item-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.item small{color:var(--muted)}
+.item p{margin:6px 0 0}
+.badge{padding:3px 10px;border-radius:99px;font-size:.8rem;font-weight:700;background:var(--sage);color:var(--green-d);white-space:nowrap}
+.badge.paused,.badge.Placed{background:#fff8e1;color:#7a5d00}
+.badge.cancelled,.badge.Cancelled{background:#fdecea;color:var(--red)}
+.badge.Delivered{background:#e3f2fd;color:#0d47a1}
+.lines{list-style:none;margin:10px 0;padding:0}
+.lines li{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 0;border-bottom:1px dashed var(--line)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0 20px}
+.stat{background:var(--leaf);border-radius:var(--radius);padding:16px}
+.stat b{font-size:1.5rem;display:block;color:var(--green-d)}
+.stat span{color:var(--muted);font-size:.9rem}
+.listing{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:10px;background:#fff}
+.listing .thumb{width:56px;height:56px;font-size:1.5rem}
+/* faq */
+details{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:10px;background:#fff}
+summary{cursor:pointer;font-weight:700}
+details p{color:var(--muted);margin:8px 0 0}
+/* toast */
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--green-d);color:#fff;padding:11px 20px;border-radius:999px;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:92%;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.err{background:var(--red)}
+/* responsive */
+@media(max-width:960px){.hero-inner,.two{grid-template-columns:1fr}.hero-art{display:none}.foot-grid{grid-template-columns:1fr 1fr}.band{grid-template-columns:1fr}}
+@media(max-width:820px){
+  .menu-btn{display:block}
+  .hdr-search{order:5;max-width:none;flex-basis:100%}
+  .main-nav{display:none;flex-direction:column;width:100%;order:6}
+  .main-nav.open{display:flex}
+  .who{display:none}
+}
+@media(max-width:560px){
+  .row2{grid-template-columns:1fr}
+  .line{grid-template-columns:52px 1fr}
+  .line .qty,.line .line-total,.line .link{grid-column:2}
+  .line .thumb{width:52px;height:52px}
+  .listing{grid-template-columns:48px 1fr}
+  .listing .acts{grid-column:1/-1}
+  .foot-grid{grid-template-columns:1fr}
+  .step{padding:58px 22px 22px}
+  .step::before{left:22px;top:12px}
+  .cart-btn{font-size:.9rem;padding:6px 10px}
+  .nav-actions{gap:6px}
+}
+</style>
+</head>
+<body>
+<header class="site-header" id="hdr"></header>
+<main id="app"></main>
+<footer class="site-footer" id="ftr"></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ================= Helpers ================= */
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const money = n => '₹' + Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  const newOrderId = () => 'FM' + uid().toUpperCase().slice(0, 7);
+
+  const CATS = { 'Rice & Grains': '🌾', 'Vegetables': '🥬', 'Fruits': '🍎', 'Pulses': '🫘', 'Dairy & Eggs': '🥚', 'Spices': '🌶️', 'Other': '🧺' };
+  const UNITS = ['kg', 'quintal', 'litre', 'dozen', 'piece', 'bunch'];
+  const STATUSES = ['Placed', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled'];
+  const FREQ = { weekly: { label: 'Every week', days: 7 }, fortnight: { label: 'Every 2 weeks', days: 14 }, monthly: { label: 'Every month', days: 30 } };
+  const FREE_DELIVERY_ABOVE = 299, DELIVERY_FEE = 30, OTP_MINUTES = 5, MAX_OTP_TRIES = 5;
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const PHONE_RE = /^[6-9]\d{9}$/;
+  const CONTACT_RE = /^[0-9+\- ]{8,15}$/;
+  const UPI_RE = /^[\w.\-]{2,}@[a-z]{2,}$/i;
+  const ROUTES = ['home', 'login', 'farmer-login', 'shop', 'subscribe', 'farmer', 'cart', 'orders', 'help'];
+  const NAV = [['home', 'Home'], ['shop', 'Shop'], ['subscribe', 'Subscriptions'], ['orders', 'My orders'], ['farmer', 'For farmers'], ['help', 'Help centre']];
+
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem('fml_' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem('fml_' + k, JSON.stringify(v)); return true; } catch { toast('Browser storage is full. Remove a large photo and try again.', true); return false; } }
+  };
+
+  let toastTimer;
+  function toast(msg, err = false) {
+    const t = $('#toast');
+    t.textContent = msg;
+    t.className = 'toast show' + (err ? ' err' : '');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+  }
+  const showMsg = (sel, text, isErr) => { const el = $(sel); if (!el) return; el.textContent = text; el.className = 'msg ' + (isErr ? 'err' : 'info'); el.hidden = false; };
+  const clearMsg = sel => { const el = $(sel); if (el) el.hidden = true; };
+  const go = route => { if (location.hash === '#/' + route) router(); else location.hash = '#/' + route; };
+  const safeNext = (n, fb = 'shop') => (ROUTES.includes(String(n || '').split('?')[0]) ? n : fb);
+  const optionsHtml = list => list.map(x => `<option>${esc(x)}</option>`).join('');
+
+  const ymd = d => { const x = new Date(d); return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`; };
+  const today = () => ymd(new Date());
+  const addDays = (s, n) => { const d = new Date(s + 'T00:00'); d.setDate(d.getDate() + n); return ymd(d); };
+  const fmtDate = s => new Date(s + 'T00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  const fmtTime = t => new Date(t).toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+  async function hashPw(pw) {
+    try {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('fml|' + pw));
+      return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+    } catch {
+      let h = 5381;
+      for (const c of 'fml|' + pw) h = ((h << 5) + h + c.charCodeAt(0)) | 0;
+      return 'h' + (h >>> 0).toString(16);
+    }
+  }
+
+  function resizeImage(file, max = 600) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = () => {
+        const img = new Image();
+        img.onerror = reject;
+        img.onload = () => {
+          const s = Math.min(1, max / Math.max(img.width, img.height));
+          const c = document.createElement('canvas');
+          c.width = Math.round(img.width * s);
+          c.height = Math.round(img.height * s);
+          c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+          resolve(c.toDataURL('image/jpeg', 0.8));
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  /* ================= Data ================= */
+  // Photos: Wikimedia Commons files (Creative Commons). Farmers can replace them with their own.
+  const commonsPhoto = name => 'https://commons.wikimedia.org/wiki/Special:FilePath/' + encodeURIComponent(name).replace(/%20/g, '_') + '?width=600';
+  // [name, category, price ₹, unit, stock, village, description, farmer, photo file or '']
+  const SEED = [
+    ['Sona Masoori Rice', 'Rice & Grains', 52, 'kg', 500, 'Guntur', 'Aged, polished rice. Light and fluffy when cooked. Good for everyday meals.', 'Ramesh Reddy', ''],
+    ['Basmati Rice', 'Rice & Grains', 92, 'kg', 300, 'Karnal', 'Long-grain aromatic basmati. Ideal for biryani and pulao.', 'Gurpreet Singh', 'Basmati Rice India, raw.jpg'],
+    ['Tomato', 'Vegetables', 24, 'kg', 120, 'Chittoor', 'Firm, ripe tomatoes picked the same week.', 'Lakshmi Devi', 'Tomatoes.jpg'],
+    ['Red Onion', 'Vegetables', 28, 'kg', 400, 'Nashik', 'Strong-flavoured red onions with a good storage life.', 'Sanjay Patil', 'Mixed onions.jpg'],
+    ['Potato', 'Vegetables', 22, 'kg', 350, 'Agra', 'Fresh table potatoes, good for curries and fries.', 'Mohan Lal', 'Potato and cross section.jpg'],
+    ['Green Chilli', 'Vegetables', 48, 'kg', 40, 'Guntur', 'Hot green chillies, harvested fresh.', 'Ramesh Reddy', 'GreenPeppers.jpg'],
+    ['Carrot', 'Vegetables', 36, 'kg', 90, 'Ooty', 'Sweet, crunchy carrots from hill farms.', 'Anitha Raj', 'Carrots of many colors.jpg'],
+    ['Spinach (Palak)', 'Vegetables', 15, 'bunch', 60, 'Pune', 'Tender leaves, cut the same morning.', 'Vijay More', ''],
+    ['Toor Dal', 'Pulses', 118, 'kg', 150, 'Gulbarga', 'Unpolished toor dal, rich in protein.', 'Basavaraj K', ''],
+    ['Yelakki Banana', 'Fruits', 42, 'dozen', 80, 'Theni', 'Sweet small bananas grown on our own farm.', 'Lakshmi Devi', '']
+  ];
+
+  const getProducts = () => store.get('products', []);
+  const saveProducts = v => store.set('products', v);
+  const productById = id => getProducts().find(p => p.id === id);
+  function seedProducts() {
+    if (store.get('products', null)) return;
+    saveProducts(SEED.map(([name, category, price, unit, stock, location, description, farmerName, file], i) => ({
+      id: 'p' + (i + 1), farmerId: 'seed-' + farmerName.toLowerCase().replace(/\W+/g, '-'), farmerName,
+      name, category, price, unit, stock, location, description,
+      image: file ? commonsPhoto(file) : '', createdAt: Date.now() - i * 60000
+    })));
+  }
+
+  const getUsers = () => store.get('users', []);
+  const saveUsers = v => store.set('users', v);
+  const getOrders = () => store.get('orders', []);
+  const saveOrders = v => store.set('orders', v);
+  const getSubs = () => store.get('subs', []);
+  const saveSubs = v => store.set('subs', v);
+  const getTickets = () => store.get('tickets', []);
+  const saveTickets = v => store.set('tickets', v);
+
+  const currentUser = () => { const id = store.get('session', null); return id ? getUsers().find(u => u.id === id) || null : null; };
+  const startSession = id => store.set('session', id);
+  const logout = () => store.set('session', null);
+  const flash = msg => store.set('flash', msg);
+
+  const card = p => {
+    const out = p.stock <= 0;
+    return `<article class="card">
+      <div class="card-img"><span class="emoji" aria-hidden="true">${CATS[p.category] || '🧺'}</span>${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}${out ? '<span class="ribbon">Sold out</span>' : ''}</div>
+      <div class="card-body">
+        <span class="tag">${esc(p.category)}</span>
+        <h3>${esc(p.name)}</h3>
+        <p class="small muted">🧑‍🌾 ${esc(p.farmerName)} · 📍 ${esc(p.location)}</p>
+        <p class="desc">${esc(p.description)}</p>
+        <div class="price-row"><strong>${money(p.price)}</strong><span class="muted">/ ${esc(p.unit)}</span></div>
+        <p class="stock ${out ? 'out' : ''}">${out ? 'Out of stock' : `${p.stock} ${esc(p.unit)} available`}</p>
+        <div class="card-actions">
+          <button class="btn btn-primary" data-add="${esc(p.id)}" ${out ? 'disabled' : ''}>Add to cart</button>
+          <a class="btn btn-outline btn-sm" href="#/subscribe?product=${esc(p.id)}">Subscribe</a>
+        </div>
+      </div></article>`;
+  };
+
+  /* ================= Cart ================= */
+  const getCart = () => store.get('cart', []);
+  const saveCart = c => { store.set('cart', c); updateBadge(); };
+  function addToCart(id, qty = 1) {
+    const p = productById(id);
+    if (!p) return;
+    if (p.stock <= 0) return toast(p.name + ' is out of stock', true);
+    const cart = getCart();
+    const line = cart.find(l => l.id === id);
+    const next = (line ? line.qty : 0) + qty;
+    if (next > p.stock) return toast(`Only ${p.stock} ${p.unit} of ${p.name} available`, true);
+    if (line) line.qty = next; else cart.push({ id, qty });
+    saveCart(cart);
+    toast(p.name + ' added to cart');
+  }
+  function setCartQty(id, qty) {
+    const p = productById(id);
+    if (!p) return;
+    if (qty < 1) return removeFromCart(id);
+    if (qty > p.stock) return toast(`Only ${p.stock} ${p.unit} of ${p.name} available`, true);
+    const cart = getCart();
+    const line = cart.find(l => l.id === id);
+    if (line) line.qty = qty;
+    saveCart(cart);
+  }
+  const removeFromCart = id => saveCart(getCart().filter(l => l.id !== id));
+  const cartLines = () => getCart().map(l => ({ l, p: productById(l.id) })).filter(x => x.p);
+  const cartSubtotal = () => cartLines().reduce((s, { l, p }) => s + p.price * l.qty, 0);
+  const deliveryFee = sub => (sub >= FREE_DELIVERY_ABOVE ? 0 : DELIVERY_FEE);
+  function updateBadge() {
+    const b = $('#cartBadge');
+    if (b) b.textContent = getCart().reduce((s, l) => s + l.qty, 0);
+  }
+
+  /* ================= Subscriptions: create orders for due deliveries ================= */
+  function processSubscriptions() {
+    const subs = getSubs();
+    if (!subs.length) return;
+    const products = getProducts();
+    const orders = getOrders();
+    const now = today();
+    let changedP = false, changedO = false, changedS = false;
+    subs.forEach(s => {
+      if (s.status !== 'active') return;
+      let guard = 0;
+      while (s.nextDate <= now && guard++ < 60) {
+        const p = products.find(x => x.id === s.productId);
+        if (!p) {
+          s.log.unshift({ date: s.nextDate, result: 'Skipped: product no longer listed' });
+        } else if (p.stock < s.qty) {
+          s.log.unshift({ date: s.nextDate, result: 'Skipped: not enough stock' });
+        } else {
+          p.stock -= s.qty; changedP = true;
+          orders.unshift({
+            id: newOrderId(), customerId: s.customerId, customerName: s.customerName, phone: s.phone,
+            address: s.address, payment: 'Cash on Delivery', paymentStatus: 'Pay on delivery',
+            delivery: deliveryFee(p.price * s.qty), subscriptionId: s.id, createdAt: Date.now(),
+            items: [{ productId: p.id, name: p.name, unit: p.unit, price: p.price, qty: s.qty, farmerId: p.farmerId, farmerName: p.farmerName, status: 'Placed' }]
+          });
+          changedO = true;
+          s.log.unshift({ date: s.nextDate, result: 'Order placed' });
+        }
+        s.nextDate = addDays(s.nextDate, FREQ[s.freq].days);
+        changedS = true;
+      }
+      s.log = s.log.slice(0, 20);
+    });
+    if (changedP) saveProducts(products);
+    if (changedO) saveOrders(orders);
+    if (changedS) saveSubs(subs);
+  }
+
+  /* ================= Logo ================= */
+  const LOGO = (size = 40) => `<svg class="logo-svg" width="${size}" height="${size}" viewBox="0 0 120 120" role="img" aria-label="FARMILIYO logo">
+    <defs><clipPath id="fmlClip"><circle cx="60" cy="60" r="56"/></clipPath></defs>
+    <g clip-path="url(#fmlClip)"><rect x="0" y="0" width="60" height="120" fill="#2e7d32"/><rect x="60" y="0" width="60" height="120" fill="#dcedc8"/></g>
+    <circle cx="60" cy="60" r="56" fill="none" stroke="#1b5e20" stroke-width="4"/>
+    <ellipse cx="30" cy="34" rx="15" ry="4" fill="#ffffff"/>
+    <rect x="23" y="22" width="14" height="13" rx="5" fill="#ffffff"/>
+    <circle cx="30" cy="46" r="6" fill="#ffe0b2"/>
+    <path d="M22 96 Q22 66 30 62 Q38 66 38 96 Z" fill="#ffffff"/>
+    <path d="M44 84 Q50 72 48 58" stroke="#f9a825" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <ellipse cx="49" cy="56" rx="4" ry="7" fill="#9ccc65" transform="rotate(22 49 56)"/>
+    <path d="M60 50 L80 32 L98 50 Z" fill="#8d6e63"/>
+    <rect x="64" y="50" width="32" height="30" fill="#ffffff"/>
+    <rect x="76" y="64" width="8" height="16" fill="#8d6e63"/>
+    <circle cx="103" cy="60" r="5" fill="#ffe0b2"/>
+    <path d="M95 90 Q95 70 103 68 Q109 70 109 90 Z" fill="#5d4037"/>
+    <rect x="97" y="80" width="9" height="9" rx="1.5" fill="#f9a825"/>
+  </svg>`;
+
+  /* ================= Shell: header, footer, router ================= */
+  function renderHeader(route) {
+    const u = currentUser();
+    $('#hdr').innerHTML = `<div class="container nav">
+      <a href="#/home" class="brand" aria-label="FARMILIYO home">${LOGO(40)}<span class="wordmark">FARMILIYO</span></a>
+      <form class="hdr-search" data-search role="search">
+        <input name="q" type="search" placeholder="Search rice, vegetables, fruits…" aria-label="Search products">
+        <button class="search-btn" type="submit" aria-label="Search">🔍</button>
+      </form>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
+      <nav class="main-nav" id="mainNav">${NAV.map(([k, l]) => `<a href="#/${k}" class="${k === route ? 'active' : ''}">${l}</a>`).join('')}</nav>
+      <div class="nav-actions">
+        <a class="cart-btn ${route === 'cart' ? 'active' : ''}" href="#/cart">🛒 Cart <span id="cartBadge" class="badge-count">0</span></a>
+        <span class="who">${u ? 'Hi, ' + esc(u.name.split(' ')[0]) : ''}</span>
+        ${u ? '<button id="logoutBtn" class="btn btn-outline btn-sm" type="button">Logout</button>' : '<a class="btn btn-outline btn-sm" href="#/login">Login</a>'}
+      </div></div>`;
+    updateBadge();
+  }
+
+  const FOOTER = `<div class="container foot-grid">
+      <div><a class="brand" href="#/home">${LOGO(36)}<span class="wordmark">FARMILIYO</span></a>
+        <p class="muted">Fresh produce from farmers to your home, at fair prices.</p></div>
+      <div><h4>Shop</h4><a href="#/shop">All products</a><a href="#/subscribe">Subscriptions</a><a href="#/cart">Cart</a></div>
+      <div><h4>Farmers</h4><a href="#/farmer-login">Farmer login (OTP)</a><a href="#/farmer">Farmer dashboard</a></div>
+      <div><h4>Help</h4><a href="#/help">Help centre</a><a href="#/help">Contact us</a><a href="#/login">Customer login</a></div>
+    </div>
+    <p class="copy">© 2026 FARMILIYO · Demo version: data is saved in this browser only.</p>`;
+
+  const pageShell = (title, sub, body) => `<div class="container page"><div class="page-head"><h1>${title}</h1><p>${sub}</p></div>${body}</div>`;
+  const lockedPanel = (msg, btnHtml) => `<div class="panel locked" style="margin-top:14px"><p>${msg}</p>${btnHtml || ''}</div>`;
+
+  function router() {
+    processSubscriptions();
+    const [path, qs = ''] = location.hash.replace(/^#\/?/, '').split('?');
+    const name = ROUTES.includes(path) ? path : 'home';
+    const params = new URLSearchParams(qs);
+    renderHeader(name);
+    const page = PAGES[name];
+    $('#app').innerHTML = page.html(params);
+    page.init(params);
+    const f = store.get('flash', null);
+    if (f) { store.set('flash', null); toast(f); }
+    window.scrollTo(0, 0);
+  }
+
+  /* ================= HOME ================= */
+  function homeHtml() {
+    const featured = getProducts().filter(p => p.stock > 0).sort((a, b) => b.createdAt - a.createdAt).slice(0, 4).map(card).join('');
+    const cats = Object.entries(CATS).slice(0, 6).map(([c, e]) => `<a class="cat-tile" href="#/shop?cat=${encodeURIComponent(c)}"><span>${e}</span>${esc(c)}</a>`).join('');
+    return `<section class="hero"><div class="container hero-inner"><div>
+        <span class="eyebrow">🌱 Farm-direct · No middlemen</span>
+        <h1>Fresh from the farm,<br><em>to your kitchen.</em></h1>
+        <p class="lead">Buy rice, vegetables, fruits and pulses straight from farmers, at prices below the usual market. Subscribe for regular deliveries.</p>
+        <form class="big-search" data-search role="search">
+          <input name="q" type="search" placeholder="Search rice, tomato, onion, dal…" aria-label="Search products">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="#/shop">Shop now</a>
+          <a class="btn btn-outline btn-lg" href="#/subscribe">Start a subscription</a>
+          <a class="btn btn-ghost btn-lg" href="#/farmer-login">I am a farmer</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="tile"><span>🌾</span><b>Rice</b><small>from ₹52/kg</small></div>
+        <div class="tile"><span>🥬</span><b>Vegetables</b><small>picked this week</small></div>
+        <div class="tile"><span>🫘</span><b>Pulses</b><small>unpolished dal</small></div>
+        <div class="tile"><span>🍌</span><b>Fruits</b><small>sweet and fresh</small></div>
+      </div></div></section>
+    <div class="container">
+      <div class="cat-row">${cats}</div>
+      <section class="section">
+        <div class="section-head"><h2>Fresh arrivals</h2><a href="#/shop">See all products →</a></div>
+        <div class="grid-products">${featured}</div>
+      </section>
+      <section class="section"><div class="trio">
+        <div class="box"><span class="ico">💰</span><h3>Lower prices</h3><p>Farm-direct pricing. You pay less than usual market rates, and farmers keep more.</p></div>
+        <div class="box"><span class="ico">🔁</span><h3>Subscriptions</h3><p>Get rice, dal or vegetables every week, every 2 weeks or every month. Pause or cancel anytime.</p></div>
+        <div class="box"><span class="ico">🧑‍🌾</span><h3>Farmers sell direct</h3><p>Farmers list produce with their own price and stock, and sign in with phone and OTP.</p></div>
+        <div class="box"><span class="ico">🛟</span><h3>Help centre</h3><p>Questions about orders, payments or delivery? Get answers or raise a request anytime.</p></div>
+      </div></section>
+      <section class="section">
+        <h2 class="center">How it works</h2>
+        <div class="steps">
+          <div class="step"><h3>Browse or search</h3><p>Find rice, vegetables, fruits and pulses by name, category or farm.</p></div>
+          <div class="step"><h3>Add to cart</h3><p>Pick your quantities. Pay cash on delivery or by UPI at checkout.</p></div>
+          <div class="step"><h3>Get it delivered</h3><p>The farmer confirms your order and delivers it to your home.</p></div>
+        </div>
+      </section>
+      <section class="section"><div class="band">
+        <div><h2 style="margin-bottom:6px">Grow it. Sell it. Keep the profit.</h2>
+          <p class="muted" style="margin:0">List your rice, vegetables or fruits for free. Set your own price and manage orders from one dashboard.</p></div>
+        <a class="btn btn-primary btn-lg" href="#/farmer-login">Start selling</a>
+      </div></section>
+    </div>`;
+  }
+
+  /* ================= CUSTOMER LOGIN ================= */
+  function loginHtml(p) {
+    const cur = currentUser();
+    if (cur && cur.role === 'customer') return pageShell('', '', '<p class="muted center">Redirecting…</p>');
+    const body = cur
+      ? `<div class="msg info">You are logged in as a farmer. <button class="link" data-logout type="button">Logout</button> to switch accounts.</div>`
+      : `<div class="tabs">
+          <button class="tab active" type="button" data-mode="login">Login</button>
+          <button class="tab" type="button" data-mode="register">Create account</button>
+        </div>
+        <form id="authForm">
+          <div id="authMsg" class="msg err" hidden></div>
+          <div id="regFields" hidden>
+            <label>Full name<input name="name" data-reg maxlength="50" autocomplete="name"></label>
+            <label>Village / town<input name="village" data-reg maxlength="60" autocomplete="address-level2"></label>
+          </div>
+          <label>Email or Gmail ID<input name="email" type="email" required autocomplete="email" placeholder="name@gmail.com"></label>
+          <label>Password<input name="password" type="password" required minlength="6" autocomplete="current-password"></label>
+          <div id="confirmWrap" hidden><label>Confirm password<input name="confirm" data-reg type="password" minlength="6" autocomplete="new-password"></label></div>
+          <button class="btn btn-primary btn-block btn-lg" id="authSubmit" type="submit">Login</button>
+        </form>`;
+    return `<div class="container page"><div class="auth-wrap"><div class="panel">
+      <h1 style="font-size:1.6rem">Customer login</h1>
+      <p class="muted" style="margin-top:-6px">${cur ? '' : 'Log in with your email or Gmail ID and password.'}</p>
+      ${body}
+      <p class="small muted" style="margin-top:18px">Are you a farmer? <a href="#/farmer-login">Log in with mobile number and OTP →</a></p>
+    </div></div></div>`;
+  }
+
+  function loginInit(p) {
+    const next = safeNext(p.get('next'), 'shop');
+    const cur = currentUser();
+    if (cur && cur.role === 'customer') return go(next);
+    if (cur) return;
+
+    const form = $('#authForm');
+    let mode = 'login';
+    const setMode = m => {
+      mode = m;
+      $$('.tab').forEach(t => t.classList.toggle('active', t.dataset.mode === m));
+      $('#regFields').hidden = m !== 'register';
+      $('#confirmWrap').hidden = m !== 'register';
+      $$('[data-reg]', form).forEach(i => { i.required = m === 'register'; });
+      $('#authSubmit').textContent = m === 'register' ? 'Create account' : 'Login';
+      clearMsg('#authMsg');
+    };
+    $$('.tab').forEach(t => t.addEventListener('click', () => setMode(t.dataset.mode)));
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const d = new FormData(form);
+      const email = String(d.get('email')).trim().toLowerCase();
+      const pw = String(d.get('password'));
+      const fail = m => showMsg('#authMsg', m, true);
+      if (!EMAIL_RE.test(email)) return fail('Enter a valid email or Gmail ID, for example name@gmail.com.');
+      if (pw.length < 6) return fail('Password must be at least 6 characters.');
+      const h = await hashPw(pw);
+      const users = getUsers();
+
+      if (mode === 'register') {
+        if (pw !== String(d.get('confirm'))) return fail('The two passwords do not match.');
+        if (users.some(x => x.contact === email)) return fail('This email is already registered. Please log in.');
+        const u = { id: uid(), name: String(d.get('name')).trim(), contact: email, pass: h, role: 'customer', village: String(d.get('village')).trim(), createdAt: Date.now() };
+        saveUsers([...users, u]);
+        startSession(u.id);
+        flash('Welcome to FARMILIYO, ' + u.name + '!');
+        return go(next);
+      }
+      const u = users.find(x => x.role === 'customer' && x.contact === email && x.pass === h);
+      if (!u) return fail('Wrong email or password.');
+      startSession(u.id);
+      flash('Welcome back, ' + u.name + '!');
+      go(next);
+    });
+    setMode('login');
+  }
+
+  /* ================= FARMER LOGIN (phone + OTP) ================= */
+  function farmerLoginHtml(p) {
+    const cur = currentUser();
+    if (cur && cur.role === 'farmer') return pageShell('', '', '<p class="muted center">Redirecting…</p>');
+    const body = cur
+      ? `<div class="msg info">You are logged in as a customer. <button class="link" data-logout type="button">Logout</button> to switch accounts.</div>`
+      : `<form id="phoneForm" novalidate>
+          <div id="phoneMsg" class="msg err" hidden></div>
+          <label>Mobile number<input name="phone" type="tel" inputmode="numeric" maxlength="16" required placeholder="10-digit mobile number" autocomplete="tel-national"></label>
+          <label>Your name <span class="muted small" style="font-weight:400">(new farmers)</span><input name="name" maxlength="50" autocomplete="name"></label>
+          <label>Village / town <span class="muted small" style="font-weight:400">(new farmers)</span><input name="village" maxlength="60" autocomplete="address-level2"></label>
+          <button class="btn btn-primary btn-block btn-lg" type="submit">Send OTP</button>
+        </form>
+        <form id="otpForm" hidden>
+          <p class="muted" style="margin:0 0 6px">OTP sent to <strong id="otpPhone"></strong></p>
+          <div class="demo-box"><span class="small muted">Demo mode: a real SMS needs a server and an SMS provider, so the code is shown here.</span>
+            <strong id="demoCode">------</strong></div>
+          <div id="otpMsg" class="msg err" hidden></div>
+          <label>Enter 6-digit OTP<input name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required autocomplete="one-time-code"></label>
+          <button class="btn btn-primary btn-block btn-lg" type="submit">Verify and login</button>
+          <div class="row2" style="margin-top:12px">
+            <button class="btn btn-outline btn-sm" type="button" id="resendBtn">Resend OTP</button>
+            <button class="btn btn-ghost btn-sm" type="button" id="backBtn">Change number</button>
+          </div>
+        </form>`;
+    return `<div class="container page"><div class="auth-wrap"><div class="panel">
+      <h1 style="font-size:1.6rem">Farmer login</h1>
+      <p class="muted" style="margin-top:-6px">${cur ? '' : 'Enter your mobile number. We will send a one-time password (OTP).'}</p>
+      ${body}
+      <p class="small muted" style="margin-top:18px">Are you a customer? <a href="#/login">Log in with email or Gmail →</a></p>
+    </div></div></div>`;
+  }
+
+  function farmerLoginInit(p) {
+    const next = safeNext(p.get('next'), 'farmer');
+    const cur = currentUser();
+    if (cur && cur.role === 'farmer') return go(next);
+    if (cur) return;
+
+    const phoneForm = $('#phoneForm'), otpForm = $('#otpForm');
+    let pending = store.get('otp', null); // { phone, name, village, code, exp, tries }
+    const newCode = () => String(Math.floor(100000 + Math.random() * 900000));
+    const showStep = step => { phoneForm.hidden = step !== 'phone'; otpForm.hidden = step !== 'otp'; };
+    const showDemoCode = () => { $('#demoCode').textContent = pending.code; $('#otpPhone').textContent = '+91 ' + pending.phone; };
+
+    if (pending && Date.now() < pending.exp) { showDemoCode(); showStep('otp'); }
+    else { pending = null; store.set('otp', null); showStep('phone'); }
+
+    phoneForm.addEventListener('submit', e => {
+      e.preventDefault();
+      clearMsg('#phoneMsg');
+      const d = new FormData(phoneForm);
+      let phone = String(d.get('phone')).replace(/\D/g, '');
+      if (phone.length === 12 && phone.startsWith('91')) phone = phone.slice(2);
+      if (!PHONE_RE.test(phone)) return showMsg('#phoneMsg', 'Enter a valid 10-digit mobile number.', true);
+      const name = String(d.get('name')).trim(), village = String(d.get('village')).trim();
+      const existing = getUsers().find(u => u.role === 'farmer' && u.contact === phone);
+      if (!existing && (!name || !village)) return showMsg('#phoneMsg', 'New farmer? Please enter your name and village to create your account.', true);
+      pending = { phone, name, village, code: newCode(), exp: Date.now() + OTP_MINUTES * 60 * 1000, tries: 0 };
+      store.set('otp', pending);
+      showDemoCode();
+      showStep('otp');
+      clearMsg('#otpMsg');
+      toast('OTP sent to +91 ' + phone + ' (demo: shown on screen)');
+    });
+
+    otpForm.addEventListener('submit', e => {
+      e.preventDefault();
+      clearMsg('#otpMsg');
+      if (!pending || Date.now() > pending.exp) return showMsg('#otpMsg', 'This OTP has expired. Please request a new one.', true);
+      if (pending.tries >= MAX_OTP_TRIES) return showMsg('#otpMsg', 'Too many wrong attempts. Request a new OTP.', true);
+      const code = String(new FormData(otpForm).get('code')).trim();
+      if (code !== pending.code) {
+        pending.tries++;
+        store.set('otp', pending);
+        return showMsg('#otpMsg', `Wrong OTP. ${MAX_OTP_TRIES - pending.tries} attempts left.`, true);
+      }
+      let users = getUsers();
+      let u = users.find(x => x.role === 'farmer' && x.contact === pending.phone);
+      if (!u) {
+        u = { id: uid(), name: pending.name, contact: pending.phone, pass: '', role: 'farmer', village: pending.village, createdAt: Date.now() };
+        saveUsers([...users, u]);
+      }
+      store.set('otp', null);
+      startSession(u.id);
+      flash('Welcome, ' + u.name + '!');
+      go(next);
+    });
+
+    $('#resendBtn').addEventListener('click', () => {
+      if (!pending) return showStep('phone');
+      pending = { ...pending, code: newCode(), exp: Date.now() + OTP_MINUTES * 60 * 1000, tries: 0 };
+      store.set('otp', pending);
+      showDemoCode();
+      showMsg('#otpMsg', 'A new OTP has been sent.', false);
+    });
+    $('#backBtn').addEventListener('click', () => { store.set('otp', null); pending = null; showStep('phone'); });
+  }
+
+  /* ================= SHOP ================= */
+  function shopHtml(p) {
+    return pageShell('Shop fresh produce', 'Direct from farms, at lower-than-market prices.', `
+      <div class="toolbar">
+        <input id="shopQ" type="search" placeholder="Search rice, tomato, onion…" aria-label="Search products" value="${esc(p.get('q') || '')}">
+        <select id="sortSel" aria-label="Sort products">
+          <option value="new">Newest</option>
+          <option value="low">Price: low to high</option>
+          <option value="high">Price: high to low</option>
+          <option value="az">Name A to Z</option>
+        </select>
+      </div>
+      <div id="catChips" class="chips"></div>
+      <p id="shopCount" class="muted small"></p>
+      <div id="shopGrid" class="grid-products"></div>
+      <p id="shopEmpty" class="center muted" hidden style="padding:30px">No products match your search. Try another word.</p>`);
+  }
+
+  function shopInit(p) {
+    const q = $('#shopQ'), sort = $('#sortSel'), chips = $('#catChips');
+    let cat = p.get('cat') || '';
+    const renderChips = () => {
+      chips.innerHTML = ['', ...Object.keys(CATS)].map(c =>
+        `<button type="button" class="chip ${c === cat ? 'on' : ''}" data-cat="${esc(c)}">${c ? CATS[c] + ' ' + esc(c) : 'All'}</button>`).join('');
+    };
+    const render = () => {
+      const term = q.value.trim().toLowerCase();
+      const cmp = { new: (a, b) => b.createdAt - a.createdAt, low: (a, b) => a.price - b.price, high: (a, b) => b.price - a.price, az: (a, b) => a.name.localeCompare(b.name) }[sort.value];
+      const list = getProducts()
+        .filter(x => (!cat || x.category === cat) && (!term || [x.name, x.category, x.location, x.farmerName, x.description].join(' ').toLowerCase().includes(term)))
+        .sort((a, b) => (b.stock > 0) - (a.stock > 0) || cmp(a, b));
+      $('#shopGrid').innerHTML = list.map(card).join('');
+      $('#shopCount').textContent = `${list.length} product${list.length === 1 ? '' : 's'}${cat ? ' in ' + cat : ''}`;
+      $('#shopEmpty').hidden = list.length > 0;
+    };
+    chips.addEventListener('click', e => {
+      const b = e.target.closest('[data-cat]');
+      if (!b) return;
+      cat = b.dataset.cat;
+      renderChips();
+      render();
+    });
+    q.addEventListener('input', render);
+    sort.addEventListener('change', render);
+    renderChips();
+    render();
+  }
+
+  /* ================= SUBSCRIPTIONS ================= */
+  function subscribeHtml(p) {
+    const u = currentUser();
+    if (!u || u.role !== 'customer') {
+      return pageShell('Subscriptions', 'Get your favourite produce delivered on a schedule. Pause or cancel anytime.',
+        lockedPanel(u ? 'Subscriptions are for customer accounts. Farmers list products on the farmer dashboard.' : 'Please log in as a customer to create a subscription.',
+          u ? '' : '<a class="btn btn-primary" href="#/login?next=subscribe">Customer login</a>'));
+    }
+    const opts = getProducts().filter(x => x.stock > 0)
+      .map(x => `<option value="${esc(x.id)}" ${x.id === p.get('product') ? 'selected' : ''}>${esc(x.name)} · ${money(x.price)}/${esc(x.unit)}</option>`).join('');
+    return pageShell('Subscriptions', 'Get your favourite produce delivered on a schedule. Pause or cancel anytime.', `
+      <div class="two" style="margin-top:18px">
+        <form id="subForm" class="panel">
+          <h2 class="h2s">New subscription</h2>
+          <div id="subMsg" class="msg err" hidden></div>
+          <label>Product<select name="product" id="subProduct" required>${opts}</select></label>
+          <div class="row2">
+            <label>Quantity per delivery<input name="qty" type="number" min="1" step="1" value="1" required></label>
+            <label>How often
+              <select name="freq"><option value="weekly">Every week</option><option value="fortnight">Every 2 weeks</option><option value="monthly">Every month</option></select>
+            </label>
+          </div>
+          <label>First delivery date<input name="start" type="date" min="${today()}" value="${addDays(today(), 1)}" required></label>
+          <label>Phone<input name="phone" type="tel" required pattern="[0-9+\\- ]{8,15}" autocomplete="tel"></label>
+          <label>Delivery address<textarea name="address" rows="2" required maxlength="250">${esc(u.village || '')}</textarea></label>
+          <p id="subEstimate" class="muted small"></p>
+          <button class="btn btn-primary btn-block btn-lg" type="submit">Start subscription</button>
+          <p class="small muted" style="margin:10px 0 0">Subscription deliveries are paid cash on delivery.</p>
+        </form>
+        <div><h2 class="h2s">My subscriptions</h2><div id="subList"></div></div>
+      </div>`);
+  }
+
+  function renderSubs() {
+    const u = currentUser();
+    const mine = getSubs().filter(s => s.customerId === u.id);
+    const all = getProducts();
+    $('#subList').innerHTML = mine.length ? mine.map(s => {
+      const p = all.find(x => x.id === s.productId);
+      const label = s.status === 'active' ? 'Active' : s.status === 'paused' ? 'Paused' : 'Cancelled';
+      return `<div class="item">
+        <div class="item-head"><strong>${esc(p ? p.name : 'Removed product')} × ${s.qty} ${esc(p ? p.unit : '')}</strong><span class="badge ${s.status}">${label}</span></div>
+        <small>${FREQ[s.freq].label} · ${s.status === 'cancelled' ? 'Cancelled' : 'Next delivery: ' + fmtDate(s.nextDate)}</small>
+        ${s.log.length ? `<details><summary>Delivery history (${s.log.length})</summary><ul class="lines">${s.log.slice(0, 8).map(l => `<li><span>${fmtDate(l.date)}</span><span class="muted small">${esc(l.result)}</span></li>`).join('')}</ul></details>` : ''}
+        ${s.status !== 'cancelled' ? `<div class="acts" style="margin-top:10px">
+          <button class="btn btn-outline btn-sm" data-pause="${esc(s.id)}">${s.status === 'active' ? 'Pause' : 'Resume'}</button>
+          <button class="btn btn-danger btn-sm" data-cancel="${esc(s.id)}">Cancel</button></div>` : ''}
+      </div>`;
+    }).join('') : '<p class="muted">No subscriptions yet. Create one using the form.</p>';
+  }
+
+  function subscribeInit() {
+    const u = currentUser();
+    if (!u || u.role !== 'customer') return;
+    const form = $('#subForm'), sel = $('#subProduct');
+    const estimate = () => {
+      const p = productById(sel.value);
+      const q = Math.max(1, parseInt(form.elements.qty.value, 10) || 1);
+      $('#subEstimate').textContent = p ? `About ${money(p.price * q)} per delivery, paid cash on delivery.` : '';
+    };
+    ['change', 'input'].forEach(ev => { sel.addEventListener(ev, estimate); form.elements.qty.addEventListener(ev, estimate); });
+    estimate();
+
+    const updateSub = (id, fn) => saveSubs(getSubs().map(s => (s.id === id && s.customerId === u.id ? fn({ ...s }) : s)));
+    $('#subList').addEventListener('click', e => {
+      const pz = e.target.closest('[data-pause]');
+      const cz = e.target.closest('[data-cancel]');
+      if (pz) {
+        updateSub(pz.dataset.pause, s => {
+          if (s.status === 'active') return { ...s, status: 'paused' };
+          return { ...s, status: 'active', nextDate: s.nextDate <= today() ? addDays(today(), 1) : s.nextDate };
+        });
+        renderSubs();
+      }
+      if (cz && confirm('Cancel this subscription? You can subscribe again later.')) {
+        updateSub(cz.dataset.cancel, s => ({ ...s, status: 'cancelled' }));
+        renderSubs();
+        toast('Subscription cancelled');
+      }
+    });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      clearMsg('#subMsg');
+      const d = new FormData(form);
+      const p = productById(d.get('product'));
+      const qty = parseInt(d.get('qty'), 10);
+      const start = String(d.get('start'));
+      const phone = String(d.get('phone')).trim();
+      if (!p || p.stock <= 0) return showMsg('#subMsg', 'Please choose a product that is in stock.', true);
+      if (!(qty >= 1)) return showMsg('#subMsg', 'Quantity must be at least 1.', true);
+      if (qty > p.stock) return showMsg('#subMsg', `Only ${p.stock} ${p.unit} available.`, true);
+      if (!start || start < today()) return showMsg('#subMsg', 'Choose today or a later date for the first delivery.', true);
+      if (!CONTACT_RE.test(phone)) return showMsg('#subMsg', 'Enter a valid phone number.', true);
+      saveSubs([{
+        id: uid(), customerId: u.id, customerName: u.name, phone,
+        address: String(d.get('address')).trim(), productId: p.id, qty,
+        freq: d.get('freq'), nextDate: start, status: 'active', createdAt: Date.now(), log: []
+      }, ...getSubs()]);
+      processSubscriptions();
+      renderSubs();
+      toast(`Subscribed to ${p.name}. First delivery: ${fmtDate(start)}`);
+    });
+    renderSubs();
+  }
+
+  /* ================= FARMER DASHBOARD ================= */
+  function farmerHtml() {
+    const u = currentUser();
+    if (!u || u.role !== 'farmer') {
+      return pageShell('Farmer dashboard', 'List your produce, set your price and stock, and manage incoming orders.',
+        lockedPanel(u ? 'This is a customer account. Log in with a farmer mobile number to list produce.' : 'Farmers sign in with their mobile number and OTP.',
+          `<a class="btn btn-primary" href="#/farmer-login?next=farmer">Farmer login</a>`));
+    }
+    return pageShell('Farmer dashboard', 'List your produce, set your price and stock, and manage incoming orders.', `
+      <div id="farmerStats" class="stats"></div>
+      <div class="two">
+        <form id="prodForm" class="panel">
+          <h2 id="prodTitle" class="h2s">Add a product</h2>
+          <input type="hidden" name="id">
+          <label>Product name<input name="name" required maxlength="60" placeholder="e.g. Sona Masoori Rice"></label>
+          <div class="row2">
+            <label>Category<select name="category">${optionsHtml(Object.keys(CATS))}</select></label>
+            <label>Unit<select name="unit">${optionsHtml(UNITS)}</select></label>
+          </div>
+          <div class="row2">
+            <label>Price (₹ per unit)<input name="price" type="number" min="1" step="0.5" required></label>
+            <label>Stock available<input name="stock" type="number" min="0" step="1" required></label>
+          </div>
+          <label>Village / town<input name="location" required maxlength="60" value="${esc(u.village || '')}"></label>
+          <label>Description<textarea name="description" rows="3" maxlength="200" placeholder="Variety, harvest date, quality…"></textarea></label>
+          <label>Photo (JPG or PNG, optional)<input name="image" type="file" accept="image/*"></label>
+          <label class="small" style="font-weight:400"><input type="checkbox" id="prodClear"> Remove current photo</label>
+          <div class="acts">
+            <button class="btn btn-primary" type="submit">Save product</button>
+            <button class="btn btn-outline" type="button" id="prodCancel" hidden>Cancel edit</button>
+          </div>
+        </form>
+        <div>
+          <h2 class="h2s">My listings</h2>
+          <div id="myListings"></div>
+          <h2 class="h2s" style="margin-top:26px">Orders for my produce</h2>
+          <div id="farmerOrders"></div>
+        </div>
+      </div>`);
+  }
+
+  function farmerInit() {
+    const u = currentUser();
+    if (!u || u.role !== 'farmer') return;
+    const form = $('#prodForm');
+    let editImage = '';
+
+    const resetForm = () => {
+      form.reset();
+      form.elements.id.value = '';
+      editImage = '';
+      form.elements.location.value = u.village || '';
+      $('#prodTitle').textContent = 'Add a product';
+      $('#prodCancel').hidden = true;
+      $('#prodClear').checked = false;
+    };
+
+    const myItems = () => getOrders().flatMap(o => o.items.filter(i => i.farmerId === u.id).map(i => ({ o, i })));
+
+    const renderFarmer = () => {
+      const mine = getProducts().filter(p => p.farmerId === u.id);
+      const items = myItems();
+      const revenue = items.filter(({ i }) => i.status !== 'Cancelled').reduce((s, { i }) => s + i.price * i.qty, 0);
+      const newOrders = items.filter(({ i }) => i.status === 'Placed').length;
+      const ids = mine.map(p => p.id);
+      const subscribers = getSubs().filter(s => s.status === 'active' && ids.includes(s.productId)).length;
+      $('#farmerStats').innerHTML = [
+        [mine.length, 'Products listed'], [newOrders, 'New orders to confirm'], [money(revenue), 'Sales value'], [subscribers, 'Active subscriptions']
+      ].map(([v, l]) => `<div class="stat"><b>${v}</b><span>${l}</span></div>`).join('');
+
+      $('#myListings').innerHTML = mine.length ? mine.map(p => `<div class="listing">
+        <div class="thumb"><span>${CATS[p.category] || '🧺'}</span>${p.image ? `<img src="${esc(p.image)}" alt="" onerror="this.remove()">` : ''}</div>
+        <div><strong>${esc(p.name)}</strong><div class="muted small">${money(p.price)} / ${esc(p.unit)} · ${p.stock} in stock · ${esc(p.location)}</div></div>
+        <div class="acts"><button class="btn btn-outline btn-sm" data-edit="${esc(p.id)}">Edit</button><button class="btn btn-danger btn-sm" data-del="${esc(p.id)}">Delete</button></div>
+      </div>`).join('') : '<p class="muted">Nothing listed yet. Use the form to add your first product.</p>';
+
+      $('#farmerOrders').innerHTML = items.length ? items.slice().reverse().map(({ o, i }) => `<div class="item">
+        <div class="item-head"><strong>${esc(i.name)} × ${i.qty} ${esc(i.unit)}</strong><span class="muted small">Order ${esc(o.id)} · ${fmtTime(o.createdAt)}</span></div>
+        <small>Customer: ${esc(o.customerName)} · ${esc(o.phone)}<br>Deliver to: ${esc(o.address)}<br>${esc(o.payment)} · ${money(i.price * i.qty)}</small>
+        <div style="margin-top:8px"><label class="small" style="margin:0;display:inline-block">Status
+          <select data-st data-order="${esc(o.id)}" data-pid="${esc(i.productId)}" style="width:auto;display:inline-block;margin-left:6px">
+            ${STATUSES.map(s => `<option ${s === i.status ? 'selected' : ''}>${s}</option>`).join('')}
+          </select></label></div>
+      </div>`).join('') : '<p class="muted">No orders yet. Customers will see your listings in the shop.</p>';
+    };
+
+    const setItemStatus = (orderId, productId, value) => {
+      const orders = getOrders(), products = getProducts();
+      const o = orders.find(x => x.id === orderId);
+      const it = o && o.items.find(i => i.productId === productId && i.farmerId === u.id);
+      if (!it) return renderFarmer();
+      const p = products.find(x => x.id === productId);
+      if (value === 'Cancelled' && it.status !== 'Cancelled') {
+        if (p) p.stock += it.qty;
+      } else if (value !== 'Cancelled' && it.status === 'Cancelled') {
+        if (p && p.stock < it.qty) { toast('Not enough stock to reopen this item', true); return renderFarmer(); }
+        if (p) p.stock -= it.qty;
+      }
+      it.status = value;
+      saveOrders(orders);
+      saveProducts(products);
+      toast('Order status updated');
+      renderFarmer();
+    };
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const d = new FormData(form);
+      const file = form.elements.image.files[0];
+      let image = $('#prodClear').checked ? '' : editImage;
+      if (file) {
+        try { image = await resizeImage(file); }
+        catch { return toast('Could not read that photo. Try a JPG or PNG.', true); }
+      }
+      const data = {
+        name: String(d.get('name')).trim(), category: d.get('category'), price: Number(d.get('price')),
+        unit: d.get('unit'), stock: Math.max(0, Math.floor(Number(d.get('stock')))),
+        location: String(d.get('location')).trim(), description: String(d.get('description')).trim(), image
+      };
+      if (!data.name || !(data.price > 0)) return toast('Enter a product name and a price above zero.', true);
+      const id = String(d.get('id') || '');
+      let list = getProducts();
+      if (id) {
+        list = list.map(p => (p.id === id && p.farmerId === u.id ? { ...p, ...data } : p));
+        toast('Product updated');
+      } else {
+        list = [{ id: uid(), farmerId: u.id, farmerName: u.name, createdAt: Date.now(), ...data }, ...list];
+        toast('Product listed! Customers can see it now.');
+      }
+      saveProducts(list);
+      resetForm();
+      renderFarmer();
+    });
+
+    $('#prodCancel').addEventListener('click', resetForm);
+
+    $('#myListings').addEventListener('click', e => {
+      const ed = e.target.closest('[data-edit]');
+      const del = e.target.closest('[data-del]');
+      if (ed) {
+        const p = getProducts().find(x => x.id === ed.dataset.edit && x.farmerId === u.id);
+        if (!p) return;
+        ['name', 'category', 'price', 'unit', 'stock', 'location', 'description'].forEach(k => { form.elements[k].value = p[k]; });
+        form.elements.id.value = p.id;
+        editImage = p.image || '';
+        $('#prodTitle').textContent = 'Edit product';
+        $('#prodCancel').hidden = false;
+        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      if (del) {
+        const p = getProducts().find(x => x.id === del.dataset.del && x.farmerId === u.id);
+        if (!p || !confirm(`Delete "${p.name}"? Existing orders will keep their record.`)) return;
+        saveProducts(getProducts().filter(x => x.id !== p.id));
+        if (form.elements.id.value === p.id) resetForm();
+        toast('Product deleted');
+        renderFarmer();
+      }
+    });
+
+    $('#farmerOrders').addEventListener('change', e => {
+      const sel = e.target.closest('[data-st]');
+      if (sel) setItemStatus(sel.dataset.order, sel.dataset.pid, sel.value);
+    });
+
+    resetForm();
+    renderFarmer();
+  }
+
+  /* ================= CART & CHECKOUT ================= */
+  function cartHtml() {
+    if (!cartLines().length) {
+      return pageShell('Your cart', '', lockedPanel('Your cart is empty.', '<a class="btn btn-primary" href="#/shop">Browse products</a>'));
+    }
+    const u = currentUser();
+    let checkout;
+    if (!u) {
+      checkout = `<div class="locked"><p>Log in as a customer to place your order.</p><a class="btn btn-primary" href="#/login?next=cart">Customer login</a></div>`;
+    } else if (u.role !== 'customer') {
+      checkout = `<div class="locked"><p>Farmer accounts cannot place orders. Log in as a customer to buy.</p><a class="btn btn-primary" href="#/login?next=cart">Customer login</a></div>`;
+    } else {
+      checkout = `<form id="checkoutForm">
+          <h2 class="h2s">Delivery and payment</h2>
+          <div id="checkMsg" class="msg err" hidden></div>
+          <label>Full name<input name="name" required maxlength="50" value="${esc(u.name)}"></label>
+          <label>Phone<input name="phone" type="tel" required pattern="[0-9+\\- ]{8,15}" autocomplete="tel"></label>
+          <label>Delivery address<textarea name="address" rows="2" required maxlength="250">${esc(u.village || '')}</textarea></label>
+          <fieldset style="border:0;padding:0;margin:0 0 12px">
+            <legend class="small" style="font-weight:700;margin-bottom:8px">Payment option</legend>
+            <label class="pay-opt"><input type="radio" name="payment" value="cod" checked><span>Cash on delivery<small>Pay when your order arrives.</small></span></label>
+            <label class="pay-opt"><input type="radio" name="payment" value="upi"><span>UPI<small>Pay with your UPI ID (demo: no real money moves).</small></span></label>
+          </fieldset>
+          <div id="upiBox" hidden><label>Your UPI ID<input name="upi" placeholder="name@upi" autocomplete="off"></label></div>
+          <button class="btn btn-primary btn-block btn-lg" type="submit">Place order</button>
+        </form>`;
+    }
+    return pageShell('Your cart', '', `<div class="two" style="margin-top:14px">
+      <div class="panel"><div id="cartList"></div></div>
+      <div>
+        <div class="panel">
+          <h2 class="h2s">Summary</h2>
+          <div class="sum-row"><span>Subtotal</span><span id="sumSub"></span></div>
+          <div class="sum-row"><span>Delivery</span><span id="sumFee"></span></div>
+          <p id="sumNote" class="small muted" style="margin:4px 0 0"></p>
+          <div class="sum-row sum-total"><strong>Total</strong><strong id="sumTotal"></strong></div>
+        </div>
+        <div class="panel" style="margin-top:16px">${checkout}</div>
+      </div></div>`);
+  }
+
+  function renderCart() {
+    const lines = cartLines();
+    if (!lines.length) return router();
+    $('#cartList').innerHTML = lines.map(({ l, p }) => `<div class="line">
+      <div class="thumb"><span>${CATS[p.category] || '🧺'}</span>${p.image ? `<img src="${esc(p.image)}" alt="" onerror="this.remove()">` : ''}</div>
+      <div><strong>${esc(p.name)}</strong><div class="muted small">${money(p.price)} / ${esc(p.unit)} · ${esc(p.farmerName)}</div></div>
+      <div class="qty"><button type="button" data-q="${esc(p.id)}" data-d="-1" aria-label="Decrease">−</button><span>${l.qty}</span><button type="button" data-q="${esc(p.id)}" data-d="1" aria-label="Increase">+</button></div>
+      <div><strong>${money(p.price * l.qty)}</strong></div>
+      <button type="button" class="link" data-rm="${esc(p.id)}">Remove</button>
+    </div>`).join('');
+    const sub = cartSubtotal(), fee = deliveryFee(sub);
+    $('#sumSub').textContent = money(sub);
+    $('#sumFee').textContent = fee ? money(fee) : 'Free';
+    $('#sumTotal').textContent = money(sub + fee);
+    $('#sumNote').textContent = fee ? `Add ${money(FREE_DELIVERY_ABOVE - sub)} more for free delivery.` : 'You get free delivery on this order.';
+  }
+
+  function cartInit() {
+    if (!cartLines().length) return;
+    renderCart();
+    $('#cartList').addEventListener('click', e => {
+      const q = e.target.closest('[data-q]');
+      const rm = e.target.closest('[data-rm]');
+      if (q) {
+        const line = getCart().find(l => l.id === q.dataset.q);
+        if (line) setCartQty(line.id, line.qty + Number(q.dataset.d));
+        renderCart();
+      }
+      if (rm) { removeFromCart(rm.dataset.rm); renderCart(); }
+    });
+
+    const form = $('#checkoutForm');
+    if (!form) return;
+    const upiBox = $('#upiBox');
+    $$('input[name=payment]', form).forEach(r => r.addEventListener('change', () => {
+      upiBox.hidden = form.elements.payment.value !== 'upi';
+      form.elements.upi.required = !upiBox.hidden;
+    }));
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      clearMsg('#checkMsg');
+      const cu = currentUser();
+      if (!cu || cu.role !== 'customer') return;
+      const d = new FormData(form);
+      const lines = cartLines();
+      if (!lines.length) return showMsg('#checkMsg', 'Your cart is empty.', true);
+      const phone = String(d.get('phone')).trim();
+      if (!CONTACT_RE.test(phone)) return showMsg('#checkMsg', 'Enter a valid phone number.', true);
+      const pay = String(d.get('payment'));
+      if (pay === 'upi' && !UPI_RE.test(String(d.get('upi')).trim())) return showMsg('#checkMsg', 'Enter a valid UPI ID, for example name@upi.', true);
+
+      const products = getProducts();
+      for (const { l, p } of lines) {
+        const cur = products.find(x => x.id === p.id);
+        if (!cur || l.qty > cur.stock) return showMsg('#checkMsg', `Only ${cur ? cur.stock : 0} ${p.unit} of ${p.name} left. Please update your cart.`, true);
+      }
+      const items = lines.map(({ l, p }) => ({ productId: p.id, name: p.name, unit: p.unit, price: p.price, qty: l.qty, farmerId: p.farmerId, farmerName: p.farmerName, status: 'Placed' }));
+      items.forEach(i => { products.find(x => x.id === i.productId).stock -= i.qty; });
+      const sub = cartSubtotal();
+      const order = {
+        id: newOrderId(), customerId: cu.id, customerName: String(d.get('name')).trim(), phone,
+        address: String(d.get('address')).trim(),
+        payment: pay === 'upi' ? 'UPI' : 'Cash on Delivery',
+        paymentStatus: pay === 'upi' ? 'Paid by UPI (demo)' : 'Pay on delivery',
+        delivery: deliveryFee(sub), items, createdAt: Date.now()
+      };
+      saveProducts(products);
+      saveOrders([order, ...getOrders()]);
+      saveCart([]);
+      flash(`Order ${order.id} placed! The farmer will contact you soon.`);
+      go('orders');
+    });
+  }
+
+  /* ================= MY ORDERS ================= */
+  function ordersHtml() {
+    const u = currentUser();
+    if (!u || u.role !== 'customer') {
+      return pageShell('My orders', 'Track your orders, buy again, or cancel before the farmer confirms.',
+        lockedPanel(u ? 'Orders are shown for customer accounts.' : 'Please log in to see your orders.',
+          u ? '' : '<a class="btn btn-primary" href="#/login?next=orders">Customer login</a>'));
+    }
+    return pageShell('My orders', 'Track your orders, buy again, or cancel before the farmer confirms.', '<div id="ordersList"></div>');
+  }
+
+  function renderOrders() {
+    const u = currentUser();
+    const mine = getOrders().filter(o => o.customerId === u.id);
+    $('#ordersList').innerHTML = mine.length ? mine.map(o => {
+      const itemsTotal = o.items.filter(i => i.status !== 'Cancelled').reduce((s, i) => s + i.price * i.qty, 0);
+      const canCancel = o.items.every(i => i.status === 'Placed');
+      return `<div class="item">
+        <div class="item-head"><strong>Order ${esc(o.id)}</strong><span class="muted small">${fmtTime(o.createdAt)}</span></div>
+        <p class="small muted">Deliver to: ${esc(o.address)} · ${esc(o.payment)} · ${esc(o.paymentStatus)}</p>
+        <ul class="lines">${o.items.map(i => `<li>
+          <span>${esc(i.name)} × ${i.qty} ${esc(i.unit)} <span class="muted small">by ${esc(i.farmerName)}</span></span>
+          <span><span class="badge ${i.status}">${i.status}</span> ${money(i.price * i.qty)}</span></li>`).join('')}</ul>
+        <div class="item-head"><span>Total: <strong>${money(itemsTotal + (o.delivery || 0))}</strong></span>
+          <div class="acts">
+            <button class="btn btn-outline btn-sm" data-again="${esc(o.id)}">Buy again</button>
+            ${canCancel ? `<button class="btn btn-danger btn-sm" data-cancel-order="${esc(o.id)}">Cancel order</button>` : ''}
+          </div></div>
+      </div>`;
+    }).join('') : '<p class="muted">You have no orders yet. <a href="#/shop">Start shopping →</a></p>';
+  }
+
+  function ordersInit() {
+    if (!currentUser() || currentUser().role !== 'customer') return;
+    renderOrders();
+    $('#ordersList').addEventListener('click', e => {
+      const again = e.target.closest('[data-again]');
+      const cancel = e.target.closest('[data-cancel-order]');
+      if (again) {
+        const o = getOrders().find(x => x.id === again.dataset.again);
+        if (o) o.items.forEach(i => addToCart(i.productId, i.qty));
+        go('cart');
+      }
+      if (cancel && confirm('Cancel this order? Stock will be released to the farmer.')) {
+        const orders = getOrders(), products = getProducts();
+        const o = orders.find(x => x.id === cancel.dataset.cancelOrder);
+        if (!o) return;
+        o.items.forEach(i => {
+          const p = products.find(x => x.id === i.productId);
+          if (p && i.status !== 'Cancelled') p.stock += i.qty;
+          i.status = 'Cancelled';
+        });
+        saveOrders(orders);
+        saveProducts(products);
+        toast('Order cancelled');
+        renderOrders();
+      }
+    });
+  }
+
+  /* ================= HELP CENTRE ================= */
+  function helpHtml() {
+    const faqs = [
+      ['How do I place an order?', 'Browse the shop, add items to your cart, then check out with your delivery address and payment option. Customers need to log in to place an order.'],
+      ['What payment options are there?', 'Cash on delivery, or UPI. In this demo version, UPI is simulated and no real money moves. A live version connects to a payment gateway such as Razorpay.'],
+      ['Is delivery free?', 'Orders of ₹299 or more have free delivery. Smaller orders have a delivery fee of ₹30.'],
+      ['How do subscriptions work?', 'Choose a product, quantity and frequency (weekly, every 2 weeks or monthly). Each due delivery is placed as an order automatically. You can pause, resume or cancel at any time.'],
+      ['Can I cancel an order?', 'Yes, as long as the farmer has not confirmed it yet. Go to My orders and tap Cancel order.'],
+      ['How do farmers list products?', 'Log in with your mobile number and OTP, then add products on the farmer dashboard. You set the price, unit, stock and photo.'],
+      ['Why do farmers log in with an OTP?', 'Many farmers use a basic phone, so a one-time code sent to their mobile is quick and secure. Customers log in with email or Gmail and a password.']
+    ];
+    return pageShell('Help centre', 'Answers to common questions, or send us a request. Open to customers and farmers.', `
+      <div class="two" style="margin-top:14px">
+        <section>
+          <h2 class="h2s">Frequently asked questions</h2>
+          ${faqs.map(([q, a], i) => `<details ${i === 0 ? 'open' : ''}><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}
+        </section>
+        <section id="contact">
+          <form id="helpForm" class="panel">
+            <h2 class="h2s">Contact support</h2>
+            <div id="helpMsg" class="msg info" hidden></div>
+            <label>Your name<input name="name" required maxlength="50"></label>
+            <label>Phone or email<input name="contact" required maxlength="80"></label>
+            <label>Topic
+              <select name="topic"><option>Order or delivery</option><option>Payment</option><option>Subscription</option><option>Farmer listing</option><option>Account or login</option><option>Other</option></select>
+            </label>
+            <label>Message<textarea name="message" rows="5" required minlength="10" maxlength="800" placeholder="Tell us what happened…"></textarea></label>
+            <button class="btn btn-primary btn-block btn-lg" type="submit">Send request</button>
+          </form>
+          <div id="myTickets" style="margin-top:20px"></div>
+          <p class="small muted" style="margin-top:14px">Helpline and support hours: add your number here before going live.</p>
+        </section>
+      </div>`);
+  }
+
+  function helpInit() {
+    const u = currentUser();
+    const form = $('#helpForm');
+    if (u) { form.elements.name.value = u.name; form.elements.contact.value = u.contact; }
+
+    const renderTickets = () => {
+      const mine = u ? getTickets().filter(t => t.userId === u.id) : [];
+      $('#myTickets').innerHTML = mine.length
+        ? '<h3>Your requests</h3>' + mine.map(t => `<div class="item">
+            <div class="item-head"><strong>${esc(t.id)} · ${esc(t.topic)}</strong><span class="badge">${esc(t.status)}</span></div>
+            <small>${fmtTime(t.createdAt)}</small><p>${esc(t.message)}</p></div>`).join('')
+        : '';
+    };
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const d = new FormData(form);
+      const message = String(d.get('message')).trim();
+      if (message.length < 10) return showMsg('#helpMsg', 'Please describe the problem in at least 10 characters.', true);
+      const ticket = {
+        id: 'FMH' + uid().toUpperCase().slice(0, 6), userId: u ? u.id : null,
+        name: String(d.get('name')).trim(), contact: String(d.get('contact')).trim(),
+        topic: String(d.get('topic')), message, status: 'Open', createdAt: Date.now()
+      };
+      saveTickets([ticket, ...getTickets()]);
+      form.reset();
+      if (u) { form.elements.name.value = u.name; form.elements.contact.value = u.contact; }
+      showMsg('#helpMsg', `Thanks! Your request ${ticket.id} has been received. We reply within 24 hours.`, false);
+      renderTickets();
+    });
+    renderTickets();
+  }
+
+  const PAGES = {
+    home: { html: homeHtml, init: () => {} },
+    login: { html: loginHtml, init: loginInit },
+    'farmer-login': { html: farmerLoginHtml, init: farmerLoginInit },
+    shop: { html: shopHtml, init: shopInit },
+    subscribe: { html: subscribeHtml, init: subscribeInit },
+    farmer: { html: farmerHtml, init: farmerInit },
+    cart: { html: cartHtml, init: cartInit },
+    orders: { html: ordersHtml, init: ordersInit },
+    help: { html: helpHtml, init: helpInit }
+  };
+
+  /* ================= Global events ================= */
+  document.addEventListener('click', e => {
+    const add = e.target.closest('[data-add]');
+    if (add && !add.disabled) return addToCart(add.dataset.add, 1);
+    const menu = e.target.closest('#menuBtn');
+    if (menu) {
+      const open = $('#mainNav').classList.toggle('open');
+      menu.setAttribute('aria-expanded', String(open));
+      return;
+    }
+    if (e.target.closest('#logoutBtn, [data-logout]')) {
+      logout();
+      flash('You have been logged out.');
+      return go('home');
+    }
+  });
+
+  document.addEventListener('submit', e => {
+    if (e.target.matches('[data-search]')) {
+      e.preventDefault();
+      const q = e.target.elements.q.value.trim();
+      go('shop' + (q ? '?q=' + encodeURIComponent(q) : ''));
+    }
+  });
+
+  /* ================= Boot ================= */
+  seedProducts();
+  $('#ftr').innerHTML = FOOTER;
+  window.addEventListener('hashchange', router);
+  if (!location.hash) location.hash = '#/home';
+  else router();
+})();
+</script>
+</body>
+</html>
