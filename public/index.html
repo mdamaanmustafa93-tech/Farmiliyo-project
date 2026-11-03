@@ -52,12 +52,15 @@ h1{font-size:clamp(1.7rem,4vw,2.3rem)}
 .main-nav a{text-decoration:none;color:var(--text);padding:8px 10px;border-radius:999px;font-weight:500;font-size:.95rem;white-space:nowrap}
 .main-nav a:hover{background:var(--leaf)}
 .main-nav a.active{background:var(--sage);color:var(--green-d);font-weight:700}
-.nav-actions{display:flex;align-items:center;gap:10px;margin-left:auto}
+.nav-actions{display:flex;align-items:center;gap:10px;margin-inline-start:auto}
 .cart-btn{text-decoration:none;color:var(--text);font-weight:600;padding:7px 12px;border-radius:999px;border:1.5px solid var(--line);white-space:nowrap}
 .cart-btn.active{border-color:var(--green)}
 .badge-count{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:99px;background:var(--amber);color:#3b2f00;font-size:.8rem;font-weight:800;padding:0 6px}
 .who{font-size:.9rem;color:var(--muted);white-space:nowrap}
-.menu-btn{display:none;background:none;border:0;font-size:1.5rem;cursor:pointer;margin-left:auto}
+.menu-btn{display:none;background:none;border:0;font-size:1.5rem;cursor:pointer;margin-inline-start:auto}
+.language-control{display:flex;align-items:center;gap:6px;margin:0;color:var(--green-d);font-size:.85rem}
+.language-control select{width:auto;max-width:185px;margin:0;padding:7px 10px;border-radius:999px;border-color:var(--green);background:var(--leaf);font-size:.9rem;cursor:pointer}
+@media(max-width:560px){.nav-actions{flex-wrap:wrap}.language-control select{max-width:140px}}
 /* footer */
 .site-footer{background:var(--leaf);border-top:1px solid var(--line);margin-top:40px;padding-top:36px}
 .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:24px}
@@ -298,19 +301,27 @@ details p{color:var(--muted);margin:8px 0 0}
   const commonsPhoto = name => 'https://commons.wikimedia.org/wiki/Special:FilePath/' + encodeURIComponent(name).replace(/%20/g, '_') + '?width=600';
   // [name, category, price ₹, unit, stock, village, description, farmer, photo file or '']
   const SEED = [
-    ['Sona Masoori Rice', 'Rice & Grains', 52, 'kg', 500, 'Guntur', 'Aged, polished rice. Light and fluffy when cooked. Good for everyday meals.', 'Ramesh Reddy', ''],
-    ['Basmati Rice', 'Rice & Grains', 92, 'kg', 300, 'Karnal', 'Long-grain aromatic basmati. Ideal for biryani and pulao.', 'Gurpreet Singh', 'Basmati Rice India, raw.jpg'],
-    ['Tomato', 'Vegetables', 24, 'kg', 120, 'Chittoor', 'Firm, ripe tomatoes picked the same week.', 'Lakshmi Devi', 'Tomatoes.jpg'],
-    ['Red Onion', 'Vegetables', 28, 'kg', 400, 'Nashik', 'Strong-flavoured red onions with a good storage life.', 'Sanjay Patil', 'Mixed onions.jpg'],
-    ['Potato', 'Vegetables', 22, 'kg', 350, 'Agra', 'Fresh table potatoes, good for curries and fries.', 'Mohan Lal', 'Potato and cross section.jpg'],
-    ['Green Chilli', 'Vegetables', 48, 'kg', 40, 'Guntur', 'Hot green chillies, harvested fresh.', 'Ramesh Reddy', 'GreenPeppers.jpg'],
-    ['Carrot', 'Vegetables', 36, 'kg', 90, 'Ooty', 'Sweet, crunchy carrots from hill farms.', 'Anitha Raj', 'Carrots of many colors.jpg'],
-    ['Spinach (Palak)', 'Vegetables', 15, 'bunch', 60, 'Pune', 'Tender leaves, cut the same morning.', 'Vijay More', ''],
-    ['Toor Dal', 'Pulses', 118, 'kg', 150, 'Gulbarga', 'Unpolished toor dal, rich in protein.', 'Basavaraj K', ''],
-    ['Yelakki Banana', 'Fruits', 42, 'dozen', 80, 'Theni', 'Sweet small bananas grown on our own farm.', 'Lakshmi Devi', '']
+    ["Sona Masoori Rice","Rice & Grains",52,"kg",500,"Guntur","Aged, polished rice. Light and fluffy when cooked. Good for everyday meals.","Ramesh Reddy",""],
+    ["Basmati Rice","Rice & Grains",92,"kg",300,"Karnal","Long-grain aromatic basmati. Ideal for biryani and pulao.","Gurpreet Singh","Basmati Rice India, raw.jpg"],
+    ["Tomato","Vegetables",24,"kg",120,"Chittoor","Firm, ripe tomatoes picked the same week.","Lakshmi Devi","Tomatoes.jpg"],
+    ["Red Onion","Vegetables",28,"kg",400,"Nashik","Strong-flavoured red onions with a good storage life.","Sanjay Patil","Mixed onions.jpg"],
+    ["Potato","Vegetables",22,"kg",350,"Agra","Fresh table potatoes, good for curries and fries.","Mohan Lal","Potato and cross section.jpg"],
+    ["Green Chilli","Vegetables",48,"kg",40,"Guntur","Hot green chillies, harvested fresh.","Ramesh Reddy","GreenPeppers.jpg"],
+    ["Carrot","Vegetables",36,"kg",90,"Ooty","Sweet, crunchy carrots from hill farms.","Anitha Raj","Carrots of many colors.jpg"],
+    ["Spinach (Palak)","Vegetables",15,"bunch",60,"Pune","Tender leaves, cut the same morning.","Vijay More",""],
+    ["Toor Dal","Pulses",118,"kg",150,"Gulbarga","Unpolished toor dal, rich in protein.","Basavaraj K",""],
+    ["Yelakki Banana","Fruits",42,"dozen",80,"Theni","Sweet small bananas grown on our own farm.","Lakshmi Devi",""]
   ];
 
-  const getProducts = () => store.get('products', []);
+  // The platform database owns the extended catalog. This array is only the
+  // current page's fetched copy; the existing demo keeps its browser overrides.
+  let catalogProducts = [];
+  let catalogReady = false;
+  const getProducts = () => {
+    const saved = store.get('products', []);
+    const savedIds = new Set(saved.map(product => product.id));
+    return [...saved, ...catalogProducts.filter(product => !savedIds.has(product.id))];
+  };
   const saveProducts = v => store.set('products', v);
   const productById = id => getProducts().find(p => p.id === id);
   function seedProducts() {
@@ -457,6 +468,31 @@ details p{color:var(--muted);margin:8px 0 0}
       <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
       <nav class="main-nav" id="mainNav">${NAV.map(([k, l]) => `<a href="#/${k}" class="${k === route ? 'active' : ''}">${l}</a>`).join('')}</nav>
       <div class="nav-actions">
+        <label class="language-control" translate="no"><span aria-hidden="true">अ / A</span><select data-language aria-label="Choose language / भाषा चुनें">
+          <option value="en" selected>English</option>
+          <option value="as">অসমীয়া · Assamese</option>
+          <option value="bn">বাংলা · Bengali</option>
+          <option value="brx">बड़ो · Bodo</option>
+          <option value="doi">डोगरी · Dogri</option>
+          <option value="gu">ગુજરાતી · Gujarati</option>
+          <option value="hi">हिन्दी · Hindi</option>
+          <option value="kn">ಕನ್ನಡ · Kannada</option>
+          <option value="ks">کٲشُر · Kashmiri</option>
+          <option value="gom">कोंकणी · Konkani</option>
+          <option value="mai">मैथिली · Maithili</option>
+          <option value="ml">മലയാളം · Malayalam</option>
+          <option value="mni-Mtei">ꯃꯤꯇꯩꯂꯣꯟ · Manipuri</option>
+          <option value="mr">मराठी · Marathi</option>
+          <option value="ne">नेपाली · Nepali</option>
+          <option value="or">ଓଡ଼ିଆ · Odia</option>
+          <option value="pa">ਪੰਜਾਬੀ · Punjabi</option>
+          <option value="sa">संस्कृतम् · Sanskrit</option>
+          <option value="sat">ᱥᱟᱱᱛᱟᱲᱤ · Santali</option>
+          <option value="sd">سنڌي · Sindhi</option>
+          <option value="ta">தமிழ் · Tamil</option>
+          <option value="te">తెలుగు · Telugu</option>
+          <option value="ur">اردو · Urdu</option>
+        </select></label>
         <a class="cart-btn ${route === 'cart' ? 'active' : ''}" href="#/cart">🛒 Cart <span id="cartBadge" class="badge-count">0</span></a>
         <span class="who">${u ? 'Hi, ' + esc(u.name.split(' ')[0]) : ''}</span>
         ${u ? '<button id="logoutBtn" class="btn btn-outline btn-sm" type="button">Logout</button>' : '<a class="btn btn-outline btn-sm" href="#/login">Login</a>'}
@@ -477,6 +513,7 @@ details p{color:var(--muted);margin:8px 0 0}
   const lockedPanel = (msg, btnHtml) => `<div class="panel locked" style="margin-top:14px"><p>${msg}</p>${btnHtml || ''}</div>`;
 
   function router() {
+    if (!catalogReady) return;
     processSubscriptions();
     const [path, qs = ''] = location.hash.replace(/^#\/?/, '').split('?');
     const name = ROUTES.includes(path) ? path : 'home';
@@ -1322,12 +1359,30 @@ details p{color:var(--muted);margin:8px 0 0}
   });
 
   /* ================= Boot ================= */
-  seedProducts();
-  $('#ftr').innerHTML = FOOTER;
-  window.addEventListener('hashchange', router);
-  if (!location.hash) location.hash = '#/home';
-  else router();
+  async function boot() {
+    seedProducts();
+    $('#ftr').innerHTML = FOOTER;
+    renderHeader('home');
+    $('#app').innerHTML = '<div class="container page"><p class="panel" role="status">Loading fresh produce…</p></div>';
+    window.addEventListener('hashchange', router);
+    let unavailable = false;
+    try {
+      const response = await fetch('/api/catalog', { signal: AbortSignal.timeout(8000) });
+      if (!response.ok) throw new Error('Catalog unavailable');
+      const products = await response.json();
+      if (!Array.isArray(products)) throw new Error('Invalid catalog');
+      catalogProducts = products;
+    } catch {
+      unavailable = true;
+    }
+    catalogReady = true;
+    if (!location.hash) location.hash = '#/home';
+    router();
+    if (unavailable) toast('Some products are temporarily unavailable. Refresh to try again.', true);
+  }
+  boot();
 })();
 </script>
+<script src="/js/languages.js" defer></script>
 </body>
 </html>
